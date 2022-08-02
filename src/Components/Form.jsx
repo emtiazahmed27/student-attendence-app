@@ -1,20 +1,23 @@
-import React from "react";
+import { React, useContext } from "react";
+import { StudentContext } from "../contexts/student";
 
-function Form(props) {
+function Form() {
+
+    const stuCtx = useContext(StudentContext)
 
     //createHandler
     const createHandler = (event) => {
         event.preventDefault();
-        if (props.stuName) {
+        if (stuCtx.stuName) {
             const newName = {
                 id: Date.now(),
-                name: props.stuName,
+                name: stuCtx.stuName,
                 isPresent: undefined,
             };
-            props.setStuName(props.stuName);
-            props.setStuList([newName, ...props.stuList]);
+            stuCtx.setStuName(stuCtx.stuName);
+            stuCtx.setStuList([newName, ...stuCtx.stuList]);
             // console.log(stuList);
-            props.setStuName("");
+            stuCtx.setStuName("");
         } else {
             alert("You're dumb");
         }
@@ -24,22 +27,22 @@ function Form(props) {
     const updateHandler = (event) => {
         event.preventDefault();
 
-        if (props.stuName) {
-            props.editable.name = props.stuName;
-            props.setStuName("");
-            props.setIsEditable(false);
-            props.setEditable(null);
+        if (stuCtx.stuName) {
+            stuCtx.editable.name = stuCtx.stuName;
+            stuCtx.setStuName("");
+            stuCtx.setIsEditable(false);
+            stuCtx.setEditable(null);
         } else {
             alert("you're dumb");
-            props.setIsEditable(false);
-            props.setEditable(null);
+            stuCtx.setIsEditable(false);
+            stuCtx.setEditable(null);
         }
     };
 
     return (
         <form
             onSubmit={(event) =>
-                props.isEditable === true
+                stuCtx.isEditable === true
                     ? updateHandler(event)
                     : createHandler(event)
             }
@@ -53,13 +56,13 @@ function Form(props) {
                 style={{ outline: "none" }}
                 type="text"
                 placeholder="Enter a valid Input"
-                value={props.stuName}
+                value={stuCtx.stuName}
                 onChange={(e) => {
-                    props.setStuName(e.target.value);
+                    stuCtx.setStuName(e.target.value);
                 }}
             />
             <button type="submit">
-                {props.isEditable === true ? "Update Stu" : "Add Stu"}
+                {stuCtx.isEditable === true ? "Update Stu" : "Add Stu"}
             </button>
         </form>
     );

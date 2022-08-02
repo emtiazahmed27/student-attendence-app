@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { StudentContext } from "../contexts/student";
 
 function AbsentStudentList(props) {
+
+    const { stuList } = useContext(StudentContext)
+
     return (
         <div
             className="absentStu"
@@ -8,7 +12,7 @@ function AbsentStudentList(props) {
         >
             <h2 style={{ margin: "0" }}>Absent Student</h2>
             <ul style={{ margin: "0", padding: "0" }}>
-                {props.stuList
+                {stuList
                     .filter((stu) => stu.isPresent == false)
                     .map((stu) => (
                         <li style={{ listStyle: "none" }}>
@@ -23,7 +27,7 @@ function AbsentStudentList(props) {
                         </li>
                     ))}
             </ul>
-        </div>
+        </div >
     );
 }
 
